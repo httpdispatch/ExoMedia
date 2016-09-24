@@ -43,15 +43,16 @@ import com.devbrackets.android.exomedia.core.EMListenerMux;
 import com.devbrackets.android.exomedia.core.api.VideoViewApi;
 import com.devbrackets.android.exomedia.core.builder.RenderBuilder;
 import com.devbrackets.android.exomedia.core.exoplayer.EMExoPlayer;
+import com.devbrackets.android.exomedia.core.listener.Id3MetadataListener;
 import com.devbrackets.android.exomedia.core.video.exo.ExoTextureVideoView;
 import com.devbrackets.android.exomedia.core.video.mp.NativeTextureVideoView;
-import com.devbrackets.android.exomedia.core.listener.Id3MetadataListener;
 import com.devbrackets.android.exomedia.core.video.scale.ScaleType;
 import com.devbrackets.android.exomedia.listener.OnBufferUpdateListener;
 import com.devbrackets.android.exomedia.listener.OnCompletionListener;
 import com.devbrackets.android.exomedia.listener.OnErrorListener;
 import com.devbrackets.android.exomedia.listener.OnPreparedListener;
 import com.devbrackets.android.exomedia.listener.OnSeekCompletionListener;
+import com.devbrackets.android.exomedia.listener.SubtitleListener;
 import com.devbrackets.android.exomedia.util.DeviceUtil;
 import com.devbrackets.android.exomedia.util.DrmProvider;
 import com.devbrackets.android.exomedia.util.Repeater;
@@ -627,6 +628,15 @@ public class EMVideoView extends RelativeLayout {
     }
 
     /**
+     * Sets the listener to inform of subtitle cues
+     *
+     * @param listener The listener to inform
+     */
+    public void setSubtitleListener(@Nullable SubtitleListener listener) {
+        listenerMux.setSubtitleListener(listener);
+    }
+
+    /**
      * Performs the functionality to setup the initial properties including
      * determining the backing implementation and reading xml attributes
      *
@@ -820,7 +830,6 @@ public class EMVideoView extends RelativeLayout {
          * Specifies if the {@link VideoViewApi} implementations should use the {@link android.view.SurfaceView}
          * implementations.  If this is false then the implementations will be based on
          * the {@link android.view.TextureView}.
-         * //TODO: add reasoning each is useful... (or automatic swapping?)
          */
         private boolean useSurfaceViewBacking = false;
         /**
